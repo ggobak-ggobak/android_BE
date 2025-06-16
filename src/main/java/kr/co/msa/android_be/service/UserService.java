@@ -9,5 +9,5 @@ public interface UserService {
     UserResponse signUp(SignUpRequestDto requestDto);
     SignInResponse signIn(SignInRequestDto requestDto);
     void signOut();
-    UserResponse getCurrentUser();
+    UserResponse getCurrentUser(String email);
 }

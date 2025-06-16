@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
         // 유저 생성
         User user = User.builder()
                 .email(signUpRequestDto.getEmail())
-                .username(signUpRequestDto.getEmail())
+                .username(signUpRequestDto.getName())
                 .password(encodedPassword)
                 .build();
 
@@ -78,7 +78,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponse getCurrentUser() {
-        return null;
+    public UserResponse getCurrentUser(String email) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UserException("사용자를 찾을 수 없습니다"));
+
+        return UserResponse.builder()
+                .id(user.getUserId())
+                .email(user.getEmail())
+                .name(user.getUsername())
+                .build();
     }
 }
